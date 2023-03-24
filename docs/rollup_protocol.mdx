@@ -1,0 +1,59 @@
+---
+sidebar_position: 1
+---
+
+# Rollup Protocol
+
+> Eclipse SVM and EVM rollups feature an *innovative new architecture*.
+
+There are two ideas that make Eclipse chains work:
+1. *Optimistic rollups*
+2. *Sovereign rollups*
+
+This chain is an optimistic, sovereign rollup deployed using [Eclipse](https://www.eclipse.builders). For a more detailed technical explanation of how the Eclipse chains work, refer to the Eclipse [*developer docs*](https://www.eclipse.builders/documentation/what-is-eclipse).
+
+In this article, we'll explain how *optimistic rollups* work, how *sovereign rollups* work, and finally why we picked this architecture over all others.
+
+### Blockchain Architecture Fundamentals
+
+A typical blockchain (or "rollup") engages in the following functions:
+- *Execution*: computing the state of the blockchain after ingesting transactions
+- *Settlement* (for rollups): verifying the correctness of execution and bridging
+- *Consensus & data availability*: establishing the ordering of transactions 
+
+We refer to the [Eclipse glossary](https://www.eclipse.builders/documentation/glossary) for a more complete list of terms.
+
+### Optimistic Rollups
+
+At a high level, rollups execute transactions and separately must "settle" that execution to verify that the execution was correct.
+
+There are two types of settlement: *optimistic* or zero-knowledge. An optimistic rollup periodically posts the result of transactions to some settlement layer along with a bounty. If a challenger correctly asserts that the execution was invalid, the challenger receives some (or all) of the bounty. The settlement layer must have some method of determining whether a challenge is correct or not.
+
+We won't go into zero-knowledge settlement in these docs.
+
+### Block Production
+
+Eclipse block production is primarily managed by a single party, called the "sequencer," which helps the network by providing the following services:
+- Providing transaction confirmations and state updates
+- Constructing and executing rollup blocks
+- Posting rollup blocks to the settlement layer, where they are passed to the consensus layer
+
+For the moment, the Eclipse team runs the only block producer. Refer to the Eclipse documentation for more information on how they plan to decentralize the Sequencer role in the future.
+
+### Bridging
+
+Between all Eclipse chains, bridging is ["*trust-minimized,*"](https://www.eclipse.builders/documentation/glossary#trust-minimized) meaning that there are almost no additional trust assumptions imposed when you bridge money. We use inter-blockchain communication (IBC) to bridge between Eclipse chains.
+
+For bridging between Eclipse chains and arbitrary chains, we plan to enable IBC for trust-minimized bridging to Cosmos chains and Hyperlane for fast-finality bridging.
+
+### Fault Proofs
+
+For Eclipse L3s, state commitments are published to Eclipse without any proof of the validity of these commitments. For some period of time (the "challenge period"), the transactions are not considered finalized. During this time, verifiers can re-execute the transactions and dispute the transaction on the Eclipse settlement layer, called a "*fault proof*." After the challenge period is over, transactions can no longer be disputed.
+
+:::note
+
+Fraud proofs have not yet been decentralized for Eclipse chains.
+
+:::
+
+
