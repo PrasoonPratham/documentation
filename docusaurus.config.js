@@ -66,7 +66,7 @@ const config = {
       navbar: {
         title: 'Eclipse',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Eclipse logo',
           src: 'img/logo.svg',
         },
         items: [
