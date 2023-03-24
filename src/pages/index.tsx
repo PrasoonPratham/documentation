@@ -31,7 +31,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Official Eclipse documentation">
+      description="Eclipse documentation">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

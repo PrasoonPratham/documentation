@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Official Eclipse Documentation",
+  title: "Eclipse Documentation",
   tagline: "Dinosaurs are cool",
   favicon: "img/favicon.ico",
 
@@ -60,7 +60,7 @@ const config = {
         title: "Eclipse",
         logo: {
           alt: "Eclipse logo",
-          src: "img/logo.svg",
+          src: "img/logo.png",
         },
         items: [
           {
