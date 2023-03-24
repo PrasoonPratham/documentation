@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Eclipse Documentation",
-  tagline: "Dinosaurs are cool",
+  tagline: "Build next gen decentralised apps ",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -64,14 +64,6 @@ const config = {
           alt: "Eclipse logo",
           src: "img/logo.png",
         },
-        items: [
-          {
-            type: "docSidebar",
-            sidebarId: "tutorialSidebar",
-            position: "left",
-            label: "Documentation",
-          },
-        ],
       },
       footer: {
         style: "dark",
@@ -81,7 +73,7 @@ const config = {
             items: [
               {
                 label: "Get Started",
-                to: "/docs/intro",
+                to: "/",
               },
             ],
           },
