@@ -8,7 +8,7 @@ Smart contracts can be deployed on Eclipse chains just like you would on Solana.
 
 Here's a simple step-by-step tutorial on deploying a **"Hello World"** contract to an Eclipse chain.
 
-:::note
+:::info
 
 This guide works right out of the box on Linux and macOS. 
 If you're using Windows, we recommend using the Windows Subsystem for Linux (WSL), we reccomend the official [Microsoft documentation](https://learn.microsoft.com/en-us/training/modules/wsl/wsl-introduction/introduction) for setting it up.
@@ -17,11 +17,9 @@ If you're using Windows, we recommend using the Windows Subsystem for Linux (WSL
 
 ## Prerequisites
 
-### Acquiring testnet tokens
+There are a few things you'll have to do before you can deploy your smart contract to the SVM chain.
 
-We need to [claim testnet tokens](../claim_testnet_tokens.mdx) to pay for transaction fees to deploy your smart contract to the testnet.
-
-### Dependencies
+### Install dependencies
 
 **i.** Install Rust and it's package manager—Cargo. 
 
@@ -39,15 +37,18 @@ cargo --version
 **ii.** We'll also have to install Node.js and npm using, which will be used later in this guide.
 
 Visit the official **[Node.js download page](https://nodejs.org/en/download/)** and download the installation binary for your system. Versions reccomend 14.0 and above.
+
+:::note
+
 npm is bundled with the Node.js installation, so you don't have to install it separately.
+
+:::
 
 **iii.** Now let's install the Solana CLI, this allows you to interact with Solana clusters—our SVM chain on Eclipse in this case.
 
 ```bash
 sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
 ```
-
-
 **iv.** Instead of setting your Solana CLI to a local cluster, set it to the SVM chain with the following command: 
 ```bash 
 solana config set --url [TODO: Insert RPC URL]
@@ -57,5 +58,98 @@ solana config set --url [TODO: Insert RPC URL]
 ```bash
 solana-keygen new
 ```
+
+This will generate a new keypair and save it to your local machine. You will need this keypair to sign transactions to deploy your smart contract to the SVM chain.
+
+### Acquiring testnet tokens
+
+We need to [claim testnet tokens](../claim_testnet_tokens.mdx) to pay for transaction fees to deploy your smart contract to the testnet. 
+
+Proceed to the next step when you've acquired the test tokens.
+
+:::warning
+
+These testnet tokens are only valid on the testnet and are meant for testing purposes only. Eclipse will never charge you for testnet tokens, please be vary of scams. Report any suspicious activity to us on our [Discord server](https://discord.com/invite/5jDfXHJGCk).
+
+:::
+
+### Deploying the smart contract
+
+Now that we've set up our environment, we can deploy our smart contract to the Eclipse SVM chain. 
+Let's start by running a local Solana cluster.
+
+```bash
+solana-test-validator
+```
+
+:::note
+
+Incase the validator fails to start, restart your computer and run the following command:
+
+```bash 
+sudo $(command -v solana-sys-tuner) --user $(whoami) > sys-tuner.log 2>&1 &
+``` 
+
+:::
+
+Now we'll clone the Solana Hello World repository and install the dependencies.
+
+```bash
+git clone https://github.com/solana-labs/example-helloworld
+cd example-helloworld
+npm install
+```
+
+Next we will build the smart contract.
+
+```bash
+npm run build:program-rust
+```
+
+Finally, we can deploy the smart contract to the SVM chain.
+
+```bash
+solana program deploy dist/program/helloworld.so
+```
+
+We can run the JavaScript client and confirm whether the smart contract was deployed successfully.
+
+```bash
+npm run start
+```
+
+The output should be something like this.
+
+```
+Let's say hello to a Solana account...
+Connection to cluster established: http://127.0.0.1:8899 { 'feature-set': 2045430982, 'solana-core': '1.7.8' }
+Using account AiT1QgeYaK86Lf9kudqKthQPCWwpG8vFA1bAAioBoF4X containing 0.00141872 SOL to pay for fees
+Using program Dro9uk45fxMcKWGb1eWALujbTssh6DW8mb4x8x3Eq5h6
+Creating account 8MBmHtJvxpKdYhdw6yPpedp6X6y2U9dCpdYaZJdmwV3A to say hello to
+Saying hello to 8MBmHtJvxpKdYhdw6yPpedp6X6y2U9dCpdYaZJdmwV3A
+8MBmHtJvxpKdYhdw6yPpedp6X6y2U9dCpdYaZJdmwV3A has been greeted 1 times
+Success
+```
+:::note
+
+Not seeing the expected output? 
+- Make sure you've run all the commands in the previous steps.
+- Inspect the program logs by running `solana logs` to see why the program failed.
+
+``` 
+Transaction executed in slot 5621:
+Signature: 4pya5iyvNfAZj9sVWHzByrxdKB84uA5sCxLceBwr9UyuETX2QwnKg56MgBKWSM4breVRzHmpb1EZQXFPPmJnEtsJ
+Status: Error processing Instruction 0: Program failed to complete
+Log Messages:
+  Program G5bbS1ipWzqQhekkiCLn6u7Y1jJdnGK85ceSYLx2kKbA invoke [1]
+  Program log: Hello World Rust program entrypoint
+  Program G5bbS1ipWzqQhekkiCLn6u7Y1jJdnGK85ceSYLx2kKbA consumed 200000 of 200000 compute units
+  Program failed to complete: exceeded maximum number of instructions allowed (200000) at instruction #334
+  Program G5bbS1ipWzqQhekkiCLn6u7Y1jJdnGK85ceSYLx2kKbA failed: Program failed to complete
+
+``` 
+
+:::
+
 
 
