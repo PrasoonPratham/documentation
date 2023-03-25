@@ -1,0 +1,65 @@
+---
+sidebar_position: 4
+---
+
+# Customising the contract
+
+This guide explains everything you need to know to use an Eclipse SVM chain.
+
+## Introduction to SVM Deployment
+
+Smart contracts can be deployed on Eclipse chains just like you would on Solana. This is because of Eclipse's compatibility with the SVM.
+
+Here's a simple step-by-step tutorial on deploying a **"Hello World"** contract to an Eclipse chain.
+
+:::note
+
+This guide works right out of the box on Linux and macOS. 
+If you're using Windows, we recommend using the Windows Subsystem for Linux (WSL), we reccomend the official [Microsoft documentation](https://learn.microsoft.com/en-us/training/modules/wsl/wsl-introduction/introduction) for setting it up.
+
+:::
+
+## Prerequisites
+
+### Acquiring testnet tokens
+
+We need to [claim testnet tokens](../claim_testnet_tokens.mdx) to pay for transaction fees to deploy your smart contract to the testnet.
+
+### Dependencies
+
+**i.** Install Rust and it's package manager—Cargo. 
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+You can check if the installation was successful by running the following commands:
+
+```bash
+rustc --version
+cargo --version
+```
+
+**ii.** We'll also have to install Node.js and npm using, which will be used later in this guide.
+
+Visit the official **[Node.js download page](https://nodejs.org/en/download/)** and download the installation binary for your system. Versions reccomend 14.0 and above.
+npm is bundled with the Node.js installation, so you don't have to install it separately.
+
+**iii.** Now let's install the Solana CLI, this allows you to interact with Solana clusters—our SVM chain on Eclipse in this case.
+
+```bash
+sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+```
+
+
+**iv.** Instead of setting your Solana CLI to a local cluster, set it to the SVM chain with the following command: 
+```bash 
+solana config set --url [TODO: Insert RPC URL]
+```
+
+**v.** If this is your first time using the Solana CLI, you will need to generate a new keypair:
+```bash
+solana-keygen new
+```
+
+

@@ -59,7 +59,7 @@ const config = {
       // Replace with your project's social card
       image: "img/social-card.png",
       navbar: {
-        title: "Eclipse",
+        title: "Eclipse Documentation",
         logo: {
           alt: "Eclipse logo",
           src: "img/logo.png",
